@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WanderLusting | Listings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Page Container -->
+    <div class="max-w-5xl mx-auto px-6 py-8">
+      <!-- Header Section -->
+      <div class="flex items-center justify-between mb-8">
+        <h3 class="text-3xl font-bold text-gray-800">All Listings</h3>
+
+        <form action="/listings/new" method="get">
+          <button
+            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition"
+          >
+            + Add New Listing
+          </button>
+        </form>
+      </div>
+
+      <!-- Listings Grid -->
+      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% for(let list of allListings){ %>
+        <li
+          class="bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col justify-between"
+        >
+          <!-- Listing Info -->
+          <div>
+            <h4 class="text-lg font-semibold text-gray-800 mb-2">
+              <%= list.title %>
+            </h4>
+
+            <p class="text-sm text-gray-500 mb-4">View listing details</p>
+          </div>
+
+          <!-- Button -->
+          <div class="flex justify-between">
+            <a
+              href="/listings/<%= list._id %>"
+              class="inline-block text-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition"
+            >
+              View Details
+            </a>
+            <form
+              action="/listings/<%= list._id%>?_method=DELETE"
+              method="post"
+            >
+              <button
+                class="bg-red-500 text-white hover:bg-red-600 text-gray-800 px-6 py-2 rounded-lg font-medium transition"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </body>
+</html>
