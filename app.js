@@ -71,6 +71,28 @@ app.get("/listings/:id", async (req, res) => {
 });
 
 
+//update listing
+app.patch("/listings/:id", async (req, res) => {
+  const { id } = req.params;
+  await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+  res.redirect(`/listings/${id}`);
+});
+
+//edit route
+app.get("/listings/:id/edit", async (req, res) => {
+  const { id } = req.params;
+  const listing = await Listing.findById(id);
+  res.render("./listing/edit.ejs", { listing });
+});
+
+//delete listing
+app.delete("/listings/:id", async (req, res) => {
+  const { id } = req.params;
+  const listing = await Listing.findByIdAndDelete(id);
+  console.log(listing);
+  res.redirect("/listings");
+});
+
 
 app.get("/", (req, res) => {
   res.send("Get Request is working");
