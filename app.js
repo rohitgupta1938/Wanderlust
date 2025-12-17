@@ -4,7 +4,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import Listing from "./models/listing.js";
 import methodOverride from "method-override";
-
+import ejsMate from 'ejs-mate';
+import '@tailwindplus/elements';
 const app = express();
 
 // ES Module me __dirname banane ka tarika
@@ -14,8 +15,11 @@ const __dirname = path.dirname(__filename);
 // View engine setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.engine('ejs', ejsMate);
+app.use(express.static(path.join(__dirname,"/public")));
 
 app.use(methodOverride("_method"));
 

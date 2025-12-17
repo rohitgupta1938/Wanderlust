@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>new</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<% layout('/layouts/boilerplate.ejs') %>
 
-  <div class="w-full max-w-2xl bg-white rounded-xl shadow-lg p-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+<div class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="w-full max-w-lg bg-white rounded-xl shadow-lg p-6">
+    <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">
       Create New Listing
     </h2>
 
-    <form action="/listings" method="POST" class="space-y-5">
+    <form action="/listings" method="POST" class="space-y-4">
 
       <!-- Title -->
       <div>
@@ -24,9 +18,8 @@
           type="text"
           name="listing[title]"
           required
-          placeholder="Ex: Cozy Beachfront Cottage"
-          class="w-full px-4 py-2 border border-gray-400 rounded-lg
-                 focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          class="w-full px-3 py-1.5 border border-gray-400 rounded-lg
+                 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         />
       </div>
 
@@ -37,11 +30,10 @@
         </label>
         <textarea
           name="listing[description]"
-          rows="4"
+          rows="3"
           required
-          placeholder="Describe your property..."
-          class="w-full px-4 py-2 border border-gray-400 rounded-lg
-                 focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          class="w-full px-3 py-1.5 border border-gray-400 rounded-lg
+                 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         ></textarea>
       </div>
 
@@ -53,9 +45,8 @@
         <input
           type="url"
           name="listing[image]"
-          placeholder="https://images.unsplash.com/..."
-          class="w-full px-4 py-2 border border-gray-400 rounded-lg
-                 focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          class="w-full px-3 py-1.5 border border-gray-400 rounded-lg
+                 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         />
       </div>
 
@@ -69,9 +60,8 @@
           name="listing[price]"
           required
           min="0"
-          placeholder="1500"
-          class="w-full px-4 py-2 border border-gray-400 rounded-lg
-                 focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          class="w-full px-3 py-1.5 border border-gray-400 rounded-lg
+                 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         />
       </div>
 
@@ -84,9 +74,8 @@
           type="text"
           name="listing[location]"
           required
-          placeholder="Malibu"
-          class="w-full px-4 py-2 border border-gray-400 rounded-lg
-                 focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          class="w-full px-3 py-1.5 border border-gray-400 rounded-lg
+                 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         />
       </div>
 
@@ -99,17 +88,16 @@
           type="text"
           name="listing[country]"
           required
-          placeholder="United States"
-          class="w-full px-4 py-2 border border-gray-400 rounded-lg
-                 focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          class="w-full px-3 py-1.5 border border-gray-400 rounded-lg
+                 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
         />
       </div>
 
-      <!-- Submit Button -->
+      <!-- Submit -->
       <button
         type="submit"
-        class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold
-               hover:bg-indigo-700 transition duration-300"
+        class="w-full bg-indigo-600 text-white py-2 rounded-lg font-medium
+               hover:bg-indigo-700 transition"
       >
         Add Listing
       </button>
@@ -117,5 +105,4 @@
     </form>
   </div>
 
-</body>
-</html>
+</div>

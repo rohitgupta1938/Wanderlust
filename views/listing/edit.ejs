@@ -1,18 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>edit</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<% layout('/layouts/boilerplate.ejs') %>
+<body>
+  <div class="bg-gray-100 min-h-screen flex items-center justify-center">
     <div class="w-full max-w-2xl bg-white rounded-xl shadow-lg p-8">
       <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
         Edit Listing
       </h2>
 
-      <form action="/listings/<%= listing.id %>?_method=PATCH" method="POST" class="space-y-5">
+      <form
+        action="/listings/<%= listing.id %>?_method=PATCH"
+        method="POST"
+        class="space-y-5"
+      >
         <!-- Title -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -35,7 +33,8 @@
             name="listing[description]"
             rows="4"
             class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          ><%=listing.description%>
+          >
+<%=listing.description%>
           </textarea>
         </div>
 
@@ -101,5 +100,5 @@
         </button>
       </form>
     </div>
-  </body>
-</html>
+  </div>
+</body>
