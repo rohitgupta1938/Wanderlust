@@ -1,3 +1,9 @@
-/* body{
-    background-color: palegreen;
-} */
+body{
+    font-family: system-ui;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.cnt{
+    flex: 1;
+}

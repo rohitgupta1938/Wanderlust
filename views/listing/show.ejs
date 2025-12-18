@@ -1,74 +1,76 @@
+
 <% layout('/layouts/boilerplate.ejs') %>
- <body>
-  <div class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-    <!-- Main Card -->
-    <div class="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
+<main class="min-h-[90vh] bg-gray-100">
+  <div class="flex justify-center px-4 sm:px-6">
+    
+    <!-- Card Container -->
+    <div class="w-100 px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
 
-      <!-- Title -->
-      <h1 class="text-3xl font-bold text-gray-800 mb-6 border-b pb-4">
+      <!-- Heading -->
+      <h3 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
         Listing Details
-      </h1>
+      </h3>
 
-      <!-- Details Section -->
-      <div class="space-y-4">
-
-        <div class="flex justify-between">
-          <span class="text-gray-500 font-medium">Title</span>
-          <span class="text-gray-800 font-semibold">
-            <%= listing.title %>
-          </span>
-        </div>
-
-        <div class="flex justify-between">
-          <span class="text-gray-500 font-medium">Description</span>
-          <span class="text-gray-800 text-right max-w-md">
-            <%= listing.description %>
-          </span>
-        </div>
-
-        <div class="flex justify-between">
-          <span class="text-gray-500 font-medium">Price</span>
-          <span class="text-green-600 font-bold text-lg">
-            ₹ <%= listing.price.toLocaleString('en-IN') %>
-          </span>
-        </div>
-
-        <div class="flex justify-between">
-          <span class="text-gray-500 font-medium">Location</span>
-          <span class="text-gray-800">
-            <%= listing.location %>
-          </span>
-        </div>
-
-        <div class="flex justify-between">
-          <span class="text-gray-500 font-medium">Country</span>
-          <span class="text-gray-800">
-            <%= listing.country %>
-          </span>
-        </div>
-
+      <!-- Image -->
+      <div class="w-full">
+        <img
+          src="<%= listing.image %>"
+          alt="image"
+          class="w-full h-56 sm:h-64 md:h-64 rounded-2xl object-cover"
+        />
       </div>
 
-      <!-- Actions -->
-      <div class="mt-8 flex gap-4">
+      <!-- Details -->
+      <div class="py-4 space-y-1">
+        <p class="text-gray-800 font-bold text-base sm:text-lg truncate">
+          <%= listing.title %>
+        </p>
 
+        <p class="text-gray-700 text-sm sm:text-base line-clamp-2">
+          <%= listing.description %>
+        </p>
+
+        <p class="text-gray-900 font-semibold mt-1 text-base">
+          ₹<%= listing.price.toLocaleString('en-IN') %>/Night
+        </p>
+
+        <p class="text-gray-700 text-sm sm:text-base">
+          <%= listing.location %>, <%= listing.country %>
+        </p>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col sm:flex-row gap-3">
         <a
           href="/listings/<%= listing._id %>/edit"
-          class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition"
+          class="w-full sm:w-auto text-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition"
         >
-          Edit Listing
+          Edit
         </a>
 
         <a
           href="/listings"
-          class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-2 rounded-lg font-medium transition"
+          class="w-full sm:w-auto text-center bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition"
         >
           Back
         </a>
 
+        <form
+          action="/listings/<%= listing._id %>?_method=DELETE"
+          method="POST"
+          class="w-full sm:w-auto"
+        >
+          <button
+            class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition"
+          >
+            Delete
+          </button>
+        </form>
       </div>
-    </div>
 
+    </div>
   </div>
-   </body>
+</main>
+
+<%- include('../includes/footer.ejs') %>

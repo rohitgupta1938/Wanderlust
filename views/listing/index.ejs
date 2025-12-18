@@ -1,58 +1,50 @@
 <%- layout('/layouts/boilerplate.ejs') %>
 <body>
-  <div class="bg-gray-100 min-h-screen">
+  <div class="bg-gray-200 min-h-screen px-5">
     <!-- Page Container -->
-    <div class="max-w-5xl mx-auto px-6 py-8">
-      <!-- Header Section -->
-      <div class="flex items-center justify-between mb-8">
-        <h3 class="text-3xl font-bold text-gray-800">All Listings</h3>
+    <!-- Header Section -->
+    <div class="flex items-center justify-between py-5">
+      <h3 class="text-3xl font-bold text-gray-800">All Listings</h3>
 
-        <form action="/listings/new" method="get">
-          <button
-            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-medium transition"
-          >
-            + Add New Listing
-          </button>
-        </form>
-      </div>
-
-      <!-- Listings Grid -->
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% for(let list of allListings){ %>
-        <li
-          class="bg-white rounded-xl shadow hover:shadow-lg transition p-6 flex flex-col justify-between"
+      <form action="/listings/new" method="get">
+        <button
+          class="bg-red-500 hover:bg-red-600 text-white px-2 py-2 rounded-lg font-medium transition"
         >
-          <!-- Listing Info -->
-          <div>
-            <h4 class="text-lg font-semibold text-gray-800 mb-2">
-              <%= list.title %>
-            </h4>
-
-            <p class="text-sm text-gray-500 mb-4">View listing details</p>
-          </div>
-
-          <!-- Button -->
-          <div class="flex justify-between">
-            <a
-              href="/listings/<%= list._id %>"
-              class="inline-block text-center bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition"
-            >
-              View Details
-            </a>
-            <form
-              action="/listings/<%= list._id%>?_method=DELETE"
-              method="post"
-            >
-              <button
-                class="bg-red-500 text-white hover:bg-red-600 text-gray-800 px-6 py-2 rounded-lg font-medium transition"
-              >
-                Delete
-              </button>
-            </form>
-          </div>
-        </li>
-        <% } %>
-      </ul>
+          + Add New Listing
+        </button>
+      </form>
     </div>
+
+    <!-- Listings Grid -->
+    <ul
+      class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
+    >
+      <% for (let listing of allListings) { %>
+      <li class="w-full">
+        <a href="/listings/<%=listing._id%>">
+          <div
+            class="w-full rounded-lg overflow-hidden hover:shadow-md transition"
+          >
+            <img
+              src="<%= listing.image %>"
+              alt="image"
+              class="w-full h-64 rounded-2xl object-cover"
+            />
+
+            <div class="p-3">
+              <p class="text-gray-800 font-medium text-sm truncate font-bold">
+                <%= listing.title %>
+              </p>
+
+              <p class="text-gray-700 font-semibold mt-1">
+                ₹<%= listing.price.toLocaleString('en-IN')%>/2 Day
+              </p>
+            </div>
+          </div>
+        </a>
+      </li>
+      <% } %>
+    </ul>
   </div>
+  <%- include('../includes/footer.ejs') %>
 </body>

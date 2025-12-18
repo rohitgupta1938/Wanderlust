@@ -1,85 +1,67 @@
 <% layout('/layouts/boilerplate.ejs') %>
-<body>
-  <div class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div class="w-full max-w-2xl bg-white rounded-xl shadow-lg p-8">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
-        Edit Listing
-      </h2>
 
-      <form
-        action="/listings/<%= listing.id %>?_method=PATCH"
-        method="POST"
-        class="space-y-5"
-      >
-        <!-- Title -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            Title
-          </label>
-          <input
-            type="text"
-            name="listing[title]"
-            value="<%=listing.title%>"
-            class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          />
-        </div>
+<div class="bg-gray-100  flex justify-center px-5">
+  <div class="w-full max-w-2xl rounded-xl p-3">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Edit your Listing</h2>
 
-        <!-- Description -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            Description
-          </label>
-          <textarea
-            name="listing[description]"
-            rows="4"
-            class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          >
-<%=listing.description%>
-          </textarea>
-        </div>
+    <form
+        action="/listings/<%= listing._id %>?_method=PATCH"
+        method="POST" class="space-y-4">
+      <!-- Title -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Title
+        </label>
+        <input
+          type="text"
+          name="listing[title]"
+          value="<%=listing.title%>"
+          class="w-full text-gray-900 px-3 py-1.5 border border-gray-400 rounded-lg bg-gray-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        />
+      </div>
 
-        <!-- Image URL -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            Image URL
-          </label>
-          <input
-            type="url"
-            name="listing[image]"
-            value="<%=listing.image%>"
-            class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          />
-        </div>
+      <!-- Description -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Description
+        </label>
+        <textarea
+          name="listing[description]"
+          rows="2"
+          class="w-full text-gray-900 px-3 py-1.5 border border-gray-400 rounded-lg bg-gray-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        ><%=listing.description%>"</textarea>
+      </div>
 
+      <!-- Image URL -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Image URL
+        </label>
+        <input
+          type="url"
+          name="listing[image]"
+          value="<%=listing.image%>"
+          class="w-full text-gray-900 px-3 py-1.5 border border-gray-400 bg-gray-100 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        />
+      </div>
+
+      <div class="flex">
         <!-- Price -->
-        <div>
+        <div class="w-1/2">
           <label class="block text-sm font-medium text-gray-700 mb-1">
             Price (₹)
           </label>
           <input
             type="number"
             name="listing[price]"
-            min="0"
             value="<%=listing.price%>"
-            class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          />
-        </div>
-
-        <!-- Location -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            Location
-          </label>
-          <input
-            type="text"
-            name="listing[location]"
-            value="<%=listing.location%>"
-            class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            min="0"
+            class="w-full text-gray-900 px-3 py-1.5 border border-gray-400 rounded-lg bg-gray-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
         </div>
 
         <!-- Country -->
-        <div>
+        <div class="w-2/4 ml-2">
           <label class="block text-sm font-medium text-gray-700 mb-1">
             Country
           </label>
@@ -87,18 +69,32 @@
             type="text"
             name="listing[country]"
             value="<%=listing.country%>"
-            class="w-full px-4 py-2 border border-gray-400 rounded-lg focus:border-gray-600 focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            class="w-full text-gray-900 px-3 py-1.5 border border-gray-400 bg-gray-100 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
         </div>
+      </div>
 
-        <!-- Submit Button -->
-        <button
-          type="submit"
-          class="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300"
-        >
-          Update Listing
-        </button>
-      </form>
-    </div>
+      <!-- Location -->
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Location
+        </label>
+        <input
+          type="text"
+          name="listing[location]"
+          value="<%=listing.location%>"
+          class="w-full text-gray-900 px-3 py-1.5 border border-gray-400 bg-gray-100 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+        />
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="bg-red-600 text-white py-2 px-5 rounded-lg font-medium hover:bg-red-700 transition"
+      >
+        edit
+      </button>
+    </form>
   </div>
-</body>
+</div>
+<%- include('../includes/footer.ejs') %>
