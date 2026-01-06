@@ -8,6 +8,8 @@ import ejsMate from "ejs-mate";
 import "@tailwindplus/elements";
 import wrapAsync from "./utils/wrapAsync.js";
 import ExpressError from "./utils/ExpressError.js";
+import listingSchema from "./schema.js";
+import Review from "./models/review.js";
 const app = express();
 
 // ES Module me __dirname banane ka tarika
@@ -37,6 +39,15 @@ main()
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
+
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body);
+  if (error) {
+    throw new ExpressError(404, error);
+  } else {
+    next();
+  }
+};
 
 app.get(
   "/testListing",
@@ -75,10 +86,8 @@ app.get(
 //create listing
 app.post(
   "/listings",
-  wrapAsync(async (req, res) => {
-    if(!req.body.listing){
-      throw new ExpressError(400,"Send Valid Data for Listing");
-    }
+  validateListing,
+  wrapAsync(async (req, res, next) => {
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -98,12 +107,11 @@ app.get(
 //update listing
 app.patch(
   "/listings/:id",
+  validateListing,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    if(!req.body.listing){
-      throw new ExpressError(400,"Send Valid Data for Listing");
-    }
     await Listing.findByIdAndUpdate(id, { ...req.body.listing });
+    res.redirect("/listings");
   })
 );
 
@@ -127,23 +135,31 @@ app.delete(
     res.redirect("/listings");
   })
 );
+app.post("/listings/:id/review", async (req, res) => {
+  let id=req.params.id;
+  let listing = await Listing.findById(id);
+  let newReview = new Review(req.body.review);
+  listing.reviews.push(newReview);
+  let ans=await listing.save();
+  await newReview.save();
+  
+  console.log(ans.reviews);
+  res.redirect(`/listings/${id}`)
+});
 
 app.get("/", (req, res) => {
   res.send("Get Request is working");
 });
-
 
 //404 handler — matches ALL unknown routes
 app.use((req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
 });
 
-app.use((err,req,res,next)=>{
-  const {statusCode=500,message="something went wrong"}=err;
-  res.status(statusCode).render("./error.ejs",{err});
-})
-
-
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message = "something went wrong" } = err;
+  res.status(statusCode).render("./error.ejs", { err });
+});
 
 app.listen(8080, () => {
   console.log("Server is working on port : 8080");
