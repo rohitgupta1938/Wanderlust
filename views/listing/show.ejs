@@ -3,7 +3,6 @@
   <!-- Listing Card -->
   <div class="flex justify-center px-4 sm:px-6">
     <div class="w-full px-4 sm:px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
-      
       <!-- Heading -->
       <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4">
         <%= listing.title %>
@@ -37,7 +36,7 @@
       <div class="flex flex-col sm:flex-row gap-3">
         <a
           href="/listings/<%= listing._id %>/edit"
-          class="w-full  text-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition"
+          class="w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition"
         >
           Edit
         </a>
@@ -52,7 +51,7 @@
         <form
           action="/listings/<%= listing._id %>?_method=DELETE"
           method="POST"
-          class="w-full "
+          class="w-full"
         >
           <button
             class="w-full bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition"
@@ -68,7 +67,7 @@
   <div class="flex justify-center px-4 sm:px-6">
     <div class="w-full px-4 sm:px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
       <form
-        action="/listings/<%= listing._id %>/review"
+        action="/listings/<%= listing._id %>/reviews"
         method="post"
         class="w-full space-y-4"
       >
@@ -77,43 +76,86 @@
           Add Your Review
         </h2>
 
-        <!-- Range -->
+        <!-- Rating -->
         <div>
-          <label class="block text-sm text-gray-700">
-            Rating
-          </label>
+          <label class="block text-sm text-gray-700 mb-1">Rating</label>
+
           <input
             type="range"
             min="1"
             max="5"
-            id="rating"
+            required
             name="review[rating]"
-            class="w-full"
+            class="peer w-full accent-blue-800 invalid:border-red-500"
           />
+
+          <p class="mt-1 text-sm text-red-500 hidden peer-invalid:block">
+            Please select a rating.
+          </p>
         </div>
 
-        <!-- Textarea -->
+        <!-- Comment -->
         <div>
-          <label class="block text-sm text-gray-700 mb-1">
-            Comment
-          </label>
+          <label class="block text-sm text-gray-700 mb-1">Comment</label>
+
           <textarea
-            rows="4"
-            placeholder="Write your review here..."
             name="review[comment]"
-            id="comment"
-            class="w-full bg-gray-100 border rounded border-gray-300 px-3 py-2 text-sm sm:text-base focus:outline-none focus:border-gray-400 resize-none"
+            rows="3"
+            required
+            minlength="10"
+            placeholder="Write your review here..."
+            class="peer w-full px-3 py-1.5 border border-gray-400 rounded-lg bg-gray-100 focus:ring-2 focus:ring-indigo-500 focus:outline-none invalid:border-red-500"
           ></textarea>
+          <p
+            class="mt-1 text-sm text-red-500 hidden peer-invalid:block peer-placeholder-shown:hidden"
+          >
+            Comment must be at least 10 characters.
+          </p>
         </div>
 
-        <!-- Button -->
+        <!-- Submit -->
         <button
           type="submit"
-          class=" border border-gray-800 rounded px-4 py-2 text-sm  hover:bg-gray-800 hover:text-white transition"
+          class="border border-gray-800 rounded px-4 py-2 text-sm hover:bg-gray-800 hover:text-white transition"
         >
           Submit
         </button>
       </form>
+    </div>
+  </div>
+  <!-- Review -->
+  <div class="flex justify-center px-4 sm:px-6">
+    <div class="w-full px-4 sm:px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
+      <h2 class="text-lg sm:text-xl font-semibold text-gray-800 mb-1">
+        All Review
+      </h2>
+      <div class="grid lg:grid-cols-2 gap-2 sm:grid-cols-1 xl:grid-cols-3">
+        <%for(review of listing.reviews){%>
+        <div
+          class="bg-gray-150 rounded-xl border border-gray-200 px-3 py-2 space-y-2"
+        >
+          <!-- username -->
+          <!-- <p class="m-0"><%=review.username%></p> -->
+          <!-- Rating -->
+          <div class="flex justify-between items-center">
+            <div class="flex items-center gap-1 text-yellow-400 text-2xl my-0">
+              <% for(let i = 0; i < review.rating; i++) { %> ★ <% } %> <%
+              for(let i= review.rating; i < 5; i++) { %>
+              <span class="text-gray-300">★</span>
+              <% } %>
+            </div>
+            <form action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
+              <button class="bg-gray-800 px-2 py-1 rounded-lg text-white hover:bg-gray-700">Delete</button>
+            </form>
+          </div>
+
+          <!-- Comment -->
+          <p class="text-gray-700 text-sm leading-relaxed my-0">
+            <%= review.comment %>
+          </p>
+        </div>
+        <%}%>
+      </div>
     </div>
   </div>
 </main>

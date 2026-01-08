@@ -8,7 +8,7 @@ import ejsMate from "ejs-mate";
 import "@tailwindplus/elements";
 import wrapAsync from "./utils/wrapAsync.js";
 import ExpressError from "./utils/ExpressError.js";
-import listingSchema from "./schema.js";
+import { listingSchema, reviewSchema } from "./schema.js";
 import Review from "./models/review.js";
 const app = express();
 
@@ -42,6 +42,15 @@ async function main() {
 
 const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body);
+  console.log(error);
+  if (error) {
+    throw new ExpressError(404, error);
+  } else {
+    next();
+  }
+};
+const validateReview = (req, res, next) => {
+  let { error } = reviewSchema.validate(req.body);
   if (error) {
     throw new ExpressError(404, error);
   } else {
@@ -99,7 +108,10 @@ app.get(
   "/listings/:id",
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id).populate("reviews");
+    if (!listing) {
+      throw new ExpressError(404, "Listing not found");
+    }
     res.render("./listing/show.ejs", { listing });
   })
 );
@@ -135,17 +147,33 @@ app.delete(
     res.redirect("/listings");
   })
 );
-app.post("/listings/:id/review", async (req, res) => {
-  let id=req.params.id;
-  let listing = await Listing.findById(id);
-  let newReview = new Review(req.body.review);
-  listing.reviews.push(newReview);
-  let ans=await listing.save();
-  await newReview.save();
-  
-  console.log(ans.reviews);
-  res.redirect(`/listings/${id}`)
-});
+//  Post reviews
+app.post(
+  "/listings/:id/reviews",
+  validateReview,
+  wrapAsync(async (req, res) => {
+    let id = req.params.id;
+    let listing = await Listing.findById(id);
+    let newReview = new Review(req.body.review);
+    listing.reviews.push(newReview);
+    let ans = await listing.save();
+    await newReview.save();
+
+    console.log(ans.reviews);
+    res.redirect(`/listings/${id}`);
+  })
+);
+// Delete reviews
+app.delete(
+  "/listings/:id/reviews/:reviewId",
+  wrapAsync(async (req, res) => {
+    let { id, reviewId } = req.params;
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    const rev=await Review.findByIdAndDelete(reviewId);
+    console.log(rev);
+    res.redirect(`/listings/${id}`);
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("Get Request is working");
@@ -153,10 +181,12 @@ app.get("/", (req, res) => {
 
 //404 handler — matches ALL unknown routes
 app.use((req, res, next) => {
+  console.log(req.method, req.path);
   next(new ExpressError(404, "Page Not Found"));
 });
 
 app.use((err, req, res, next) => {
+  // console.log(err);
   const { statusCode = 500, message = "something went wrong" } = err;
   res.status(statusCode).render("./error.ejs", { err });
 });
