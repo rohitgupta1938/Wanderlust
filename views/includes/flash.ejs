@@ -1,0 +1,37 @@
+<% if(success && success.length) {%>
+<div
+  class="relative rounded-md border border-green-400 bg-green-100 px-4 py-3 text-green-800 transition-opacity duration-300 w-1/2 m-auto my-2"
+  role="alert"
+>
+  <strong class="font-semibold"><%=success%></strong>
+
+  <button
+    type="button"
+    class="absolute right-3 top-3 text-red-800 hover:text-red-900 focus:outline-none"
+    aria-label="Close"
+    onclick="this.parentElement.remove()"
+  >
+    ✕
+  </button>
+</div>
+
+<%}%> 
+
+<% if(error && error.length) {%>
+<div
+  class="relative rounded-md border border-red-400 bg-red-100 px-4 py-3 text-red-800 transition-opacity duration-300 w-1/2 m-auto my-2"
+  role="alert"
+>
+  <strong class="font-semibold"><%=error%></strong>
+
+  <button
+    type="button"
+    class="absolute right-3 top-3 text-red-800 hover:text-red-900 focus:outline-none"
+    aria-label="Close"
+    onclick="this.parentElement.remove()"
+  >
+    ✕
+  </button>
+</div>
+
+<%}%>
