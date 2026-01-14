@@ -10,6 +10,9 @@ import "@tailwindplus/elements";
 import ExpressError from "./utils/ExpressError.js";
 import listings from "./router/listings.js";
 import reviews from "./router/reviews.js";
+import passport from "passport";
+import LocalStrategy from "passport-local"
+import User from "./models/user.js"
 const app = express();
 
 // ES Module me __dirname banane ka tarika
@@ -50,11 +53,27 @@ const sessionOption={
 }
 app.use(session(sessionOption))
 app.use(flash());
-app.use((req,res,next)=>{
-  res.locals.success=req.flash("success");
-  res.locals.error=req.flash("error");
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
   next();
-})
+});
+app.get("/demouser", async (req, res) => {
+  const fakeUser = {
+    email: "rohitgupta@gmail.com",
+    username: "rohitgupta",
+  };
+
+  const registeredUser = await User.register(fakeUser, "rohit");
+  console.log(registeredUser)
+  res.send(registeredUser);
+});
 
 app.use("/listings",listings);
 app.use("/listings/:id/reviews",reviews);
