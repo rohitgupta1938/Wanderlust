@@ -8,8 +8,9 @@ import flash from "connect-flash";
 import { fileURLToPath } from "url";
 import "@tailwindplus/elements";
 import ExpressError from "./utils/ExpressError.js";
-import listings from "./router/listings.js";
-import reviews from "./router/reviews.js";
+import listingRout from "./router/listings.js";
+import reviewRout from "./router/reviews.js";
+import userRout from "./router/user.js"
 import passport from "passport";
 import LocalStrategy from "passport-local"
 import User from "./models/user.js"
@@ -31,7 +32,7 @@ app.use(methodOverride("_method"));
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderLust";
 main()
   .then((response) => {
-    console.log(response);
+    console.log("DB id Connected!");
   })
   .catch((err) => {
     console.log(err);
@@ -55,28 +56,49 @@ app.use(session(sessionOption))
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
+// passport.use(new LocalStrategy(User.authenticate()));
+
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      const user = await User.findOne({ username });
+
+      // User not found
+      if (!user) {
+        return done(null, false, {
+          message: "Account does not exist",
+        });
+      }
+
+      // Password check
+      const isValid = await user.authenticate(password);
+      if (!isValid.user) {
+        return done(null, false, {
+          message: "Incorrect password",
+        });
+      }
+
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.ReqUser=req.user;
   next();
 });
-app.get("/demouser", async (req, res) => {
-  const fakeUser = {
-    email: "rohitgupta@gmail.com",
-    username: "rohitgupta",
-  };
 
-  const registeredUser = await User.register(fakeUser, "rohit");
-  console.log(registeredUser)
-  res.send(registeredUser);
-});
-
-app.use("/listings",listings);
-app.use("/listings/:id/reviews",reviews);
+app.use("/listings",listingRout);
+app.use("/listings/:id/reviews",reviewRout);
+app.use("/",userRout);
 
 app.get("/", (req, res) => {
   res.send("Get Request is working");
@@ -90,6 +112,7 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "something went wrong" } = err;
+  console.log(err);
   res.status(statusCode).render("./error.ejs", { err });
 });
 

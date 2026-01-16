@@ -14,7 +14,7 @@
             d="M12 2C8 2 5 5 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-4-3-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"
           />
         </svg>
-          <span class="text-2xl font-semibold text-gray-900 tracking-tight">
+        <span class="text-2xl font-semibold text-gray-900 tracking-tight">
           Wander<span class="text-rose-500">Lust</span>
         </span>
       </div>
@@ -40,9 +40,11 @@
 
       <!-- Right -->
       <div class="flex items-center gap-4">
+        <%if(!ReqUser){%>
         <a
-        href="/login"
-        class="hidden sm:inline-flex text-xl font-medium text-gray-700">
+          href="/login"
+          class="hidden sm:inline-flex text-xl font-medium text-gray-700"
+        >
           Login
         </a>
 
@@ -52,7 +54,17 @@
         >
           Sign up
         </a>
-
+        <%}%> <%if(ReqUser){%>
+        <div class="hidden sm:inline-flex text-xl font-medium text-gray-700">
+          <%=ReqUser.username%>
+        </div>
+        <a
+          href="/logout"
+          class="hidden sm:inline-flex rounded-full bg-rose-500 px-4 py-2 text-xl text-white"
+        >
+          Logout
+        </a>
+        <%}%>
         <!-- Mobile Menu Button -->
         <button onclick="toggleMenu()" class="md:hidden">
           <svg
@@ -91,9 +103,15 @@
     >
 
     <hr />
-
+    <%if(!ReqUser){%>
     <a href="/login" class="block text-gray-700">Login</a>
     <a href="/signup" class="block text-rose-500 font-semibold">Sign up</a>
+    <%}%>
+    <hr />
+    <%if(ReqUser){%>
+    <p class="block text-gray-700 mb-2"><%=ReqUser.username %></p>
+    <a href="/logout" class="block text-rose-500 font-semibold">Logout</a>
+    <%}%>
   </div>
 </div>
 
