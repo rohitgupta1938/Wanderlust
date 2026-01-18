@@ -20,6 +20,10 @@
       <!-- Details -->
       <div class="py-4 space-y-2">
         <p class="text-gray-700 text-sm sm:text-base line-clamp-2">
+          owned by <i><%= listing.owner.username %></i>
+        </p>
+
+        <p class="text-gray-700 text-sm sm:text-base line-clamp-2">
           <%= listing.description %>
         </p>
 
@@ -33,19 +37,13 @@
       </div>
 
       <!-- Buttons -->
+       <%if(ReqUser && listing.owner._id.equals(ReqUser._id)){%>
       <div class="flex flex-col sm:flex-row gap-3">
         <a
           href="/listings/<%= listing._id %>/edit"
           class="w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition"
         >
           Edit
-        </a>
-
-        <a
-          href="/listings"
-          class="w-full text-center bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-medium transition"
-        >
-          Back
         </a>
 
         <form
@@ -60,6 +58,7 @@
           </button>
         </form>
       </div>
+      <%}%>
     </div>
   </div>
 
@@ -134,9 +133,6 @@
         <div
           class="bg-gray-150 rounded-xl border border-gray-200 px-3 py-2 space-y-2"
         >
-          <!-- username -->
-          <!-- <p class="m-0"><%=review.username%></p> -->
-          <!-- Rating -->
           <div class="flex justify-between items-center">
             <div class="flex items-center gap-1 text-yellow-400 text-2xl my-0">
               <% for(let i = 0; i < review.rating; i++) { %> ★ <% } %> <%

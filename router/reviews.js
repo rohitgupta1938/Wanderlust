@@ -3,16 +3,7 @@ const router = express.Router({mergeParams:true});
 import wrapAsync from "../utils/wrapAsync.js";
 import Listing from "../models/listing.js";
 import Review from "../models/review.js";
-import { reviewSchema } from "../schema.js";
-
-const validateReview = (req, res, next) => {
-  let { error } = reviewSchema.validate(req.body);
-  if (error) {
-    throw new ExpressError(404, error);
-  } else {
-    next();
-  }
-};
+import {validateReview} from '../middleware.js'
 
 //  Post reviews
 router.post(
@@ -36,7 +27,7 @@ router.delete(
     let { id, reviewId } = req.params;
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     const rev = await Review.findByIdAndDelete(reviewId);
-    console.log(rev);
+    // console.log(rev);
     req.flash("success","Review is Deleted!");
     res.redirect(`/listings/${id}`);
   })
