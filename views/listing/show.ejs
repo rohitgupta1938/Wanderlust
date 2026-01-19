@@ -20,7 +20,7 @@
       <!-- Details -->
       <div class="py-4 space-y-2">
         <p class="text-gray-700 text-sm sm:text-base line-clamp-2">
-          owned by <i><%= listing.owner.username %></i>
+          owned by <i> <%= listing.owner.username %> </i>
         </p>
 
         <p class="text-gray-700 text-sm sm:text-base line-clamp-2">
@@ -37,7 +37,7 @@
       </div>
 
       <!-- Buttons -->
-       <%if(ReqUser && listing.owner._id.equals(ReqUser._id)){%>
+      <%if(ReqUser && listing.owner._id.equals(ReqUser._id)){%>
       <div class="flex flex-col sm:flex-row gap-3">
         <a
           href="/listings/<%= listing._id %>/edit"
@@ -63,6 +63,7 @@
   </div>
 
   <!-- Review Form -->
+  <% if(ReqUser) {%>
   <div class="flex justify-center px-4 sm:px-6">
     <div class="w-full px-4 sm:px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
       <form
@@ -122,6 +123,7 @@
       </form>
     </div>
   </div>
+  <%}%>
   <!-- Review -->
   <div class="flex justify-center px-4 sm:px-6">
     <div class="w-full px-4 sm:px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
@@ -134,19 +136,32 @@
           class="bg-gray-150 rounded-xl border border-gray-200 px-3 py-2 space-y-2"
         >
           <div class="flex justify-between items-center">
-            <div class="flex items-center gap-1 text-yellow-400 text-2xl my-0">
-              <% for(let i = 0; i < review.rating; i++) { %> ★ <% } %> <%
-              for(let i= review.rating; i < 5; i++) { %>
-              <span class="text-gray-300">★</span>
-              <% } %>
-            </div>
-            <form action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE" method="POST">
-              <button class="bg-gray-800 px-2 py-1 rounded-lg text-white hover:bg-gray-700">Delete</button>
+            <h1 class="text-2xl">👤 <%=review.author.username%></h1>
+            <%if(ReqUser){%>
+            <form
+              action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE"
+              method="POST"
+            >
+              <%if(review.author._id.equals(ReqUser._id)){%>
+              <button
+                class="bg-gray-800 px-2 py-1 rounded-lg text-white hover:bg-gray-700"
+              >
+                Delete
+              </button>
+              <%}%>
             </form>
+            <%}%>
+          </div>
+
+          <div class="flex items-center gap-1 text-yellow-400 text-2xl my-0">
+            <% for(let i=0; i < review.rating; i++) { %> ★ <% } %> <% for(let
+            i=review.rating; i < 5; i++) { %>
+            <span class="text-gray-300">★</span>
+            <% } %>
           </div>
 
           <!-- Comment -->
-          <p class="text-gray-700 text-sm leading-relaxed my-0">
+          <p class="break-all whitespace-pre-wrap text-sm text-gray-700">
             <%= review.comment %>
           </p>
         </div>

@@ -1,20 +1,25 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const reviewSchema = new mongoose.Schema({
   comment: {
     type: String,
-    require:true,
+    required: true,
   },
   rating: {
     type: Number,
     min: 1,
     max: 5,
-    required: true
+    required: true,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  
 });
 
 export default mongoose.model("Review", reviewSchema);
