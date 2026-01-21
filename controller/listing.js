@@ -19,12 +19,10 @@ const listingController = {
     const listing = await Listing.findById(id)
       .populate({ path: "reviews", populate: { path: "author" } })
       .populate("owner");
-    console.log(listing);
     if (!listing) {
       req.flash("error", "Listing you requested for does not exist");
       return res.redirect("/listings");
     }
-    console.log("hello", listing.owner);
     res.render("./listing/show.ejs", { listing });
   },
   updateListing: async (req, res) => {

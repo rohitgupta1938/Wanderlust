@@ -39,7 +39,6 @@ export const isReviewAuthor = async (req, res, next) => {
 
 export const validateListing = (req, res, next) => {
   let { error } = listingSchema.validate(req.body);
-  console.log(error);
   if (error) {
     throw new ExpressError(404, error);
   } else {

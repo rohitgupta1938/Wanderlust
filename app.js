@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import "@tailwindplus/elements";
 import ExpressError from "./utils/ExpressError.js";
 import listingRout from "./router/listings.js";
-import reviewRout from "./router/reviews.js";
+import reviewRout from "./router/review.js";
 import userRout from "./router/user.js"
 import passport from "passport";
 import LocalStrategy from "passport-local"
@@ -112,7 +112,6 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   const { statusCode = 500, message = "something went wrong" } = err;
-  console.log(err);
   res.status(statusCode).render("./error.ejs", { err });
 });
 
