@@ -12,7 +12,7 @@ export const userController = {
           return next(err);
         }
         req.flash("success", "User was registred!");
-        res.redirect("/listings");
+        res.redirect("/");
       });
     } catch (e) {
       req.flash("error", e.message);
@@ -26,7 +26,7 @@ export const userController = {
     req.flash("success", "Welcome Back to wanderlust!");
     let redirectUrl = res.locals.redirectUrl
       ? res.locals.redirectUrl
-      : "/listings";
+      : "/";
     res.redirect(redirectUrl);
   },
   logoutUser: (req, res, next) => {

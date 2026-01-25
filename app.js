@@ -1,3 +1,8 @@
+import "dotenv/config";
+if (process.env.NODE_ENV != "production") {
+  console.log(process.env.SECRET_KEY);
+}
+
 import express from "express";
 import mongoose from "mongoose";
 import path from "path";
@@ -10,10 +15,11 @@ import "@tailwindplus/elements";
 import ExpressError from "./utils/ExpressError.js";
 import listingRout from "./router/listings.js";
 import reviewRout from "./router/review.js";
-import userRout from "./router/user.js"
+import userRout from "./router/user.js";
 import passport from "passport";
-import LocalStrategy from "passport-local"
-import User from "./models/user.js"
+import LocalStrategy from "passport-local";
+import User from "./models/user.js";
+import Listing from "./models/listing.js";
 const app = express();
 
 // ES Module me __dirname banane ka tarika
@@ -42,17 +48,17 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
-const sessionOption={
-  secret:"mysupersecret",
-  resave:false,
-  saveUninitialized:true,
-  cookie:{
-    expires:Date.now()+7*24*60*60*60*1000,
-    maxAge:7*24*60*60*60*1000,
-    httpOnly:true
-  }
-}
-app.use(session(sessionOption))
+const sessionOption = {
+  secret: "mysupersecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 60 * 1000,
+    httpOnly: true,
+  },
+};
+app.use(session(sessionOption));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -88,21 +94,21 @@ passport.use(
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
-  res.locals.ReqUser=req.user;
+  res.locals.ReqUser = req.user;
   next();
 });
 
-app.use("/listings",listingRout);
-app.use("/listings/:id/reviews",reviewRout);
-app.use("/",userRout);
+app.use("/listings", listingRout);
+app.use("/listings/:id/reviews", reviewRout);
+app.use("/", userRout);
 
-app.get("/", (req, res) => {
-  res.send("Get Request is working");
-});
+app.get("/",async(req,res)=>{
+  const allListings = await Listing.find({});
+  res.render("./includes/hero.ejs",{ allListings });
+})
 
 //404 handler — matches ALL unknown routes
 app.use((req, res, next) => {

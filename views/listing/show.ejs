@@ -1,5 +1,5 @@
 <% layout('/layouts/boilerplate.ejs') %>
-<main class="min-h-[90vh] bg-gray-100">
+<main class="min-h-[90vh] bg-gray-100 mt-16 lg:mt-20">
   <!-- Listing Card -->
   <div class="flex justify-center px-4 sm:px-6">
     <div class="w-full px-4 sm:px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
@@ -78,21 +78,22 @@
 
         <!-- Rating -->
         <div>
-          <label class="block text-sm text-gray-700 mb-1">Rating</label>
-
-          <input
-            type="range"
-            min="1"
-            max="5"
-            required
-            name="review[rating]"
-            class="peer w-full accent-blue-800 invalid:border-red-500"
-          />
-
-          <p class="mt-1 text-sm text-red-500 hidden peer-invalid:block">
-            Please select a rating.
-          </p>
-        </div>
+              <label class="block text-sm text-gray-700 mb-1">Rating</label>
+              <fieldset class="starability-slot">
+                <input type="radio" id="no-rate" class="input-no-rate invalid:border-red-500" name="review[rating]" value="1"
+                  checked aria-label="No rating." />
+                <input type="radio" id="second-rate1" name="review[rating]" value="1" />
+                <label for="second-rate1" title="Terrible">1 star</label>
+                <input type="radio" id="second-rate2" name="review[rating]" value="2" />
+                <label for="second-rate2" title="Not good">2 stars</label>
+                <input type="radio" id="second-rate3" name="review[rating]" value="3" />
+                <label for="second-rate3" title="Average">3 stars</label>
+                <input type="radio" id="second-rate4" name="review[rating]" value="4" />
+                <label for="second-rate4" title="Very good">4 stars</label>
+                <input type="radio" id="second-rate5" name="review[rating]" value="5" />
+                <label for="second-rate5" title="Amazing">5 stars</label>
+              </fieldset>
+            </div>
 
         <!-- Comment -->
         <div>
@@ -161,7 +162,7 @@
           </div>
 
           <!-- Comment -->
-          <p class="break-all whitespace-pre-wrap text-sm text-gray-700">
+          <p class="break-all whitespace-wrap text-sm text-gray-700">
             <%= review.comment %>
           </p>
         </div>
