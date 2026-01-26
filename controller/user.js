@@ -35,7 +35,7 @@ export const userController = {
         return next(err);
       }
       req.flash("success", "you are logout!");
-      res.redirect("/listings");
+      res.redirect("/");
     });
   }
 };

@@ -9,13 +9,8 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-    type: String,
-    default:
-      "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/78/d4/09/aaravi-beach.jpg?w=400&h=-1&s=1",
-    set: (v) =>
-      v === ""
-        ? "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1c/78/d4/09/aaravi-beach.jpg?w=400&h=-1&s=1"
-        : v,
+    filename: String,
+    path:String
   },
   price: Number,
   location: String,

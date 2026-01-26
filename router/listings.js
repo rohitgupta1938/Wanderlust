@@ -21,10 +21,10 @@ router.post('/',isLoggedIn,upload.single('listing[image]'),validateListing,wrapA
 router.get("/:id", wrapAsync(listingController.showListing));
 
 //update listing
-router.patch("/:id",isLoggedIn,isOwner,validateListing,wrapAsync(listingController.updateListing));
+router.patch("/:id",isLoggedIn,isOwner,upload.single('listing[image]'),validateListing,wrapAsync(listingController.updateListing));
 
 //edit route
-router.get("/:id/edit",isLoggedIn,wrapAsync(listingController.editListing));
+router.get("/:id/edit",isLoggedIn,wrapAsync(listingController.renderEditListingPage));
 
 //delete listing
 router.delete("/:id",isLoggedIn,isOwner,wrapAsync(listingController.distroyListing));
