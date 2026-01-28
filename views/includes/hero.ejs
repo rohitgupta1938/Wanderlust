@@ -1,6 +1,6 @@
 <% layout('/layouts/boilerplate.ejs') %>
 <section
-  class="relative flex items-center justify-center h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)] mt-16 lg:mt-20"
+  class="relative flex items-center justify-center h-[calc(100vh-4rem)] lg:h-[calc(100vh-5rem)]"
 >
   <!-- Background Image -->
   <div class="absolute inset-0 z-0">
@@ -30,13 +30,12 @@
         <span class="block text-rose-400">Escape</span>
       </h1>
 
-      <p class="text-base sm:text-lg lg:text-2xl text-sky-100 max-w-4xl mx-auto">
+      <p class="text-base sm:text-lg lg:text-2xl text-white opacity-75 max-w-4xl mx-auto p-5">
         Explore unique homes, experiences, and places around the world. Your
         adventure starts here.
       </p>
     </div>
-    <div className="mt-10 animate-fade-in">
-      <%- include('./search-bar.ejs') %>
+    <div className="mt-[4rem] rounded-full animate-fade-in">
     </div>
   </div>
 </section>

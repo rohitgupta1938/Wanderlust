@@ -15,7 +15,7 @@ const listingController = {
     newListing.image = {path,filename}
     await newListing.save();
     req.flash("success", "New Listing is Created!");
-    res.redirect("/listings");
+    res.redirect("/wanderlust/listings");
   },
   showListing: async (req, res) => {
     const { id } = req.params;
@@ -24,7 +24,7 @@ const listingController = {
       .populate("owner");
     if (!listing) {
       req.flash("error", "Listing you requested for does not exist");
-      return res.redirect("/listings");
+      return res.redirect("/wanderlust/listings");
     }
     res.render("./listing/show.ejs", { listing });
   },
@@ -48,7 +48,7 @@ const listingController = {
     const listing = await Listing.findById(id);
     if (!listing) {
       req.flash("error", "Listing you requested for does not exist");
-      return res.redirect("/listings");
+      return res.redirect("/wanderlust/listings");
     }
     const originalUrl = listing.image.path;
     console.log(originalUrl);
@@ -58,7 +58,7 @@ const listingController = {
     const { id } = req.params;
     const listing = await Listing.findByIdAndDelete(id);
     req.flash("success", "Listing is Deleted!");
-    res.redirect("/listings");
+    res.redirect("/wanderlust/listings");
   },
 };
 

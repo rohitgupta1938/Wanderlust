@@ -1,32 +1,41 @@
 <%- layout('/layouts/boilerplate.ejs') %>
-<section class="bg-gray-200 min-h-screen px-5 py-10">
-  <div class="flex items-center justify-between py-5">
-    <div>
-      <h2
-        class="font-display text-2xl lg:text-4xl font-bold text-foreground"
-      >
+<section class="bg-gray-200 min-h-screen px-10 py-8">
+  <form
+    action="/filter"
+    method="get"
+    class="md:hidden flex items-center justify-between gap-4"
+  >
+    <input
+      type="text"
+      name="q"
+      placeholder="Search your Destination"
+      class="w-full pl-2 pr-4 py-1 border-2 border-solid border-red-600/90 rounded-lg bg-gray-100 focus:ring-1 focus:ring-red-600/90 focus:outline-none invalid:border-red-600/90"
+    />
+    <button
+      class="bg-red-600/90 px-4 py-1 rounded-full text-white cursor-pointer"
+    >
+      Search
+    </button>
+  </form>
+  <div class="flex items-center wrap">
+    <div class="py-3">
+      <h2 class="font-display text-2xl lg:text-4xl font-bold text-foreground">
         Featured Stays
       </h2>
       <p class="text-muted-foreground mt-1">
         Handpicked destinations loved by travelers
       </p>
     </div>
-    <form action="/listings/new" method="get">
-      <button
-        class="bg-red-500 hover:bg-red-600 text-white px-2 py-2 rounded-lg font-medium transition"
-      >
-        + Add New Listing
-      </button>
-    </form>
   </div>
 
   <!-- Listings Grid -->
   <ul
     class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
   >
+  <%if(allListings.length>0) {%>
     <% for (let listing of allListings) { %>
     <li class="w-full">
-      <a href="/listings/<%=listing._id%>">
+      <a href="/wanderlust/listings/<%=listing._id%>">
         <div
           class="w-full rounded-lg overflow-hidden hover:shadow-md transition"
         >
@@ -50,5 +59,9 @@
       </a>
     </li>
     <% } %>
+  <% } %>
+  <%if(allListings.length>0) {%>
+    <h1 class="flex justify-center items-center"></h1>
+  <%}%>
   </ul>
 </section>

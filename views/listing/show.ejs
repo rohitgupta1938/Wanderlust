@@ -1,5 +1,5 @@
 <% layout('/layouts/boilerplate.ejs') %>
-<main class="min-h-[90vh] bg-gray-100 mt-16 lg:mt-20">
+<main class="min-h-[90vh] bg-gray-100">
   <!-- Listing Card -->
   <div class="flex justify-center px-4 sm:px-6">
     <div class="w-full px-4 sm:px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
@@ -40,14 +40,14 @@
       <%if(ReqUser && listing.owner._id.equals(ReqUser._id)){%>
       <div class="flex flex-col sm:flex-row gap-3">
         <a
-          href="/listings/<%= listing._id %>/edit"
+          href="/wanderlust/listings/<%= listing._id %>/edit"
           class="w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition"
         >
           Edit
         </a>
 
         <form
-          action="/listings/<%= listing._id %>?_method=DELETE"
+          action="/wanderlust/wanderlust/listings/<%= listing._id %>?_method=DELETE"
           method="POST"
           class="w-full"
         >
@@ -67,7 +67,7 @@
   <div class="flex justify-center px-4 sm:px-6">
     <div class="w-full px-4 sm:px-5 sm:w-3/4 md:w-2/3 lg:w-1/2 py-6">
       <form
-        action="/listings/<%= listing._id %>/reviews"
+        action="/wanderlust/listings/<%= listing._id %>/reviews"
         method="post"
         class="w-full space-y-4"
       >
@@ -140,7 +140,7 @@
             <h1 class="text-2xl">👤 <%=review.author.username%></h1>
             <%if(ReqUser){%>
             <form
-              action="/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE"
+              action="/wanderlust/listings/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE"
               method="POST"
             >
               <%if(review.author._id.equals(ReqUser._id)){%>

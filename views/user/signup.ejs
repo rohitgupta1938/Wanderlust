@@ -1,5 +1,5 @@
 <% layout('/layouts/boilerplate.ejs') %>
-<main class="flex py-16 justify-center bg-gray-100 px-4 mt-16 lg:mt-20">
+<main class="flex py-16 justify-center bg-gray-100 px-4">
   <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
     
     <!-- Heading -->
@@ -8,7 +8,7 @@
     </h2>
 
     <!-- Signup Form -->
-    <form action="/signup" method="POST" class="space-y-4">
+    <form action="/wanderlust/signup" method="POST" class="space-y-4">
 
       <!-- Username -->
       <div>
@@ -65,7 +65,7 @@
     <!-- Login Redirect -->
     <p class="text-sm text-center text-gray-600 mt-4">
       Already have an account?
-      <a href="/login" class="text-indigo-600 font-semibold hover:underline">
+      <a href="/wanderlust/login" class="text-indigo-600 font-semibold hover:underline">
         Login
       </a>
     </p>

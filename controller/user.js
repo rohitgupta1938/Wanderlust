@@ -1,3 +1,4 @@
+import User from '../models/user.js'
 export const userController = {
   renderSignupPage: (req, res) => {
     res.render("./user/signup.ejs");
@@ -12,11 +13,11 @@ export const userController = {
           return next(err);
         }
         req.flash("success", "User was registred!");
-        res.redirect("/");
+        res.redirect("/wanderlust");
       });
     } catch (e) {
       req.flash("error", e.message);
-      res.redirect("/signup");
+      res.redirect("/wanderlust/signup");
     }
   },
   loginPage: (req, res) => {
@@ -26,7 +27,7 @@ export const userController = {
     req.flash("success", "Welcome Back to wanderlust!");
     let redirectUrl = res.locals.redirectUrl
       ? res.locals.redirectUrl
-      : "/";
+      : "/wanderlust";
     res.redirect(redirectUrl);
   },
   logoutUser: (req, res, next) => {
@@ -35,7 +36,7 @@ export const userController = {
         return next(err);
       }
       req.flash("success", "you are logout!");
-      res.redirect("/");
+      res.redirect("/wanderlust");
     });
   }
 };

@@ -16,6 +16,7 @@ import ExpressError from "./utils/ExpressError.js";
 import listingRout from "./router/listings.js";
 import reviewRout from "./router/review.js";
 import userRout from "./router/user.js";
+import homeRout from "./router/home.js";
 import passport from "passport";
 import LocalStrategy from "passport-local";
 import User from "./models/user.js";
@@ -101,14 +102,31 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/listings", listingRout);
-app.use("/listings/:id/reviews", reviewRout);
-app.use("/", userRout);
+app.use("/wanderlust/listings", listingRout);
+app.use("/wanderlust/listings/:id/reviews", reviewRout);
+app.use("/wanderlust", userRout);
+app.use("/wanderlust", homeRout);
 
-app.get("/",async(req,res)=>{
-  const allListings = await Listing.find({});
-  res.render("./includes/hero.ejs",{ allListings });
-})
+app.get("/filter", async (req, res) => {
+  let filterValue = req.query.q.toLocaleLowerCase();
+  let allListings = await Listing.find({});
+  allListings = allListings.filter((listing) => {
+    let title = listing.title.toLocaleLowerCase();
+    let description = listing.description.toLocaleLowerCase();
+    let country = listing.country.toLocaleLowerCase();
+    let location = listing.location.toLocaleLowerCase();
+    if (
+      title.includes(filterValue) ||
+      description.includes(filterValue) ||
+      location.includes(filterValue) ||
+      country.includes(filterValue)
+    ) {
+      return listing;
+    }
+  });
+  console.log(allListings)
+  res.render("listing/index.ejs", { allListings });
+});
 
 //404 handler — matches ALL unknown routes
 app.use((req, res, next) => {

@@ -1,5 +1,5 @@
 <% layout('/layouts/boilerplate.ejs') %>
-<main class="flex pt-16 pb-32 justify-center bg-gray-100 px-4 mt-16 lg:mt-20 ">
+<main class="flex pt-16 pb-32 justify-center bg-gray-100 px-4 ">
   <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-6">
     
     <!-- Heading -->
@@ -9,7 +9,7 @@
     <p class="text-center text-gray-400 mb-6">Sign in to continue</p>
 
     <!-- Signup Form -->
-    <form action="/login" method="POST" class="space-y-4">
+    <form action="/wanderlust/login" method="POST" class="space-y-4">
 
       <!-- Username -->
       <div>
@@ -52,7 +52,7 @@
     <!-- Login Redirect -->
     <p class="text-sm text-center text-gray-600 mt-4">
       Don't have an account?
-      <a href="/signup" class="text-indigo-600 font-semibold hover:underline">
+      <a href="/wanderlust/signup" class="text-indigo-600 font-semibold hover:underline">
         Create one
       </a>
     </p>
