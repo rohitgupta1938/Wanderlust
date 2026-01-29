@@ -8,11 +8,11 @@ const listingController = {
     res.render("./listing/new.ejs");
   },
   createListing: async (req, res, next) => {
-    const path=req.file.path;
-    const filename=req.file.filename;
+    const path = req.file.path;
+    const filename = req.file.filename;
     const newListing = new Listing(req.body.listing);
     newListing.owner = req.user._id;
-    newListing.image = {path,filename}
+    newListing.image = { path, filename };
     await newListing.save();
     req.flash("success", "New Listing is Created!");
     res.redirect("/wanderlust/listings");
@@ -33,15 +33,15 @@ const listingController = {
     const listing = await Listing.findByIdAndUpdate(id, {
       ...req.body.listing,
     });
-    if (typeof req.file !='undefined') {
+    if (typeof req.file != "undefined") {
       listing.image = {
         filename: req.file.filename,
         path: req.file.path,
-      }
+      };
       await listing.save();
     }
     req.flash("success", "Listing is Updated!");
-    res.redirect(`/listings/${id}`);
+    res.redirect(`/wanderlust/listings/${id}`);
   },
   renderEditListingPage: async (req, res) => {
     const { id } = req.params;
@@ -51,7 +51,6 @@ const listingController = {
       return res.redirect("/wanderlust/listings");
     }
     const originalUrl = listing.image.path;
-    console.log(originalUrl);
     res.render("./listing/edit.ejs", { listing, originalUrl });
   },
   distroyListing: async (req, res) => {

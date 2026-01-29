@@ -9,18 +9,21 @@ import path from "path";
 import methodOverride from "method-override";
 import ejsMate from "ejs-mate";
 import session from "express-session";
+import MongoStore from 'connect-mongo';
 import flash from "connect-flash";
 import { fileURLToPath } from "url";
 import "@tailwindplus/elements";
 import ExpressError from "./utils/ExpressError.js";
-import listingRout from "./router/listings.js";
-import reviewRout from "./router/review.js";
-import userRout from "./router/user.js";
-import homeRout from "./router/home.js";
+import listingRoute from "./router/listings.js";
+import reviewRoute from "./router/review.js";
+import userRoute from "./router/user.js";
+import homeRoute from "./router/home.js";
+import searchRoute from "./router/search.js";
 import passport from "passport";
 import LocalStrategy from "passport-local";
 import User from "./models/user.js";
 import Listing from "./models/listing.js";
+import { env } from "process";
 const app = express();
 
 // ES Module me __dirname banane ka tarika
@@ -36,7 +39,8 @@ app.use(express.json());
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 app.use(methodOverride("_method"));
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderLust";
+// const MONGO_URL = "mongodb://127.0.0.1:27017/wanderLust";
+const dbUrl=process.env.MONGO_URL;
 main()
   .then((response) => {
     console.log("DB id Connected!");
@@ -46,10 +50,21 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+  await mongoose.connect(dbUrl);
 }
 
+const store=MongoStore.create({
+  mongoUrl:dbUrl,
+  crypto:{
+    secret:"mysupersecret",
+  },
+  touchAfter:24*3600,
+});
+store.on("error",()=>{
+  console.log("ERROR IN MONGO SESSION STORE",)
+})
 const sessionOption = {
+  store:store,
   secret: "mysupersecret",
   resave: false,
   saveUninitialized: true,
@@ -102,31 +117,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/wanderlust/listings", listingRout);
-app.use("/wanderlust/listings/:id/reviews", reviewRout);
-app.use("/wanderlust", userRout);
-app.use("/wanderlust", homeRout);
-
-app.get("/filter", async (req, res) => {
-  let filterValue = req.query.q.toLocaleLowerCase();
-  let allListings = await Listing.find({});
-  allListings = allListings.filter((listing) => {
-    let title = listing.title.toLocaleLowerCase();
-    let description = listing.description.toLocaleLowerCase();
-    let country = listing.country.toLocaleLowerCase();
-    let location = listing.location.toLocaleLowerCase();
-    if (
-      title.includes(filterValue) ||
-      description.includes(filterValue) ||
-      location.includes(filterValue) ||
-      country.includes(filterValue)
-    ) {
-      return listing;
-    }
-  });
-  console.log(allListings)
-  res.render("listing/index.ejs", { allListings });
-});
+app.use("/wanderlust/listings", listingRoute);
+app.use("/wanderlust/listings/:id/reviews", reviewRoute);
+app.use("/wanderlust", userRoute);
+app.use("/wanderlust", homeRoute);
+app.use("/wanderlust/search", searchRoute);
 
 //404 handler — matches ALL unknown routes
 app.use((req, res, next) => {
