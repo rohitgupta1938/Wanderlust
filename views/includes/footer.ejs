@@ -1,122 +1,84 @@
-<!-- <footer class="bg-gray-200">
-  <div class="flex justify-center items-center gap-3 text-xl py-4">
-    <i class="fa-brands fa-instagram"></i>
-    <i class="fa-brands fa-facebook"></i>
-    <i class="fa-brands fa-linkedin-in"></i>
-  </div>
-  <div class="flex justify-center items-center ">&copy;Wanderlust Pvt. Ltd</div>
-  <div class="flex justify-center items-center py-4 gap-3">
-    <a href="/" class="hover:underline">privacy</a>
-    <a href="/" class="hover:underline">About</a>
-    <a href="/" class="hover:underline">Term</a>
-  </div>
-</footer> -->
-
-<footer class="bg-muted/50 border-t border-border px-5">
-  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-
-    <!-- Top Grid -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
-
-      <!-- Support -->
-      <div>
-        <h3 class="font-semibold text-foreground mb-4">Support</h3>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Help Center</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Safety Information</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Cancellation Options</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Report a Concern</a></li>
-        </ul>
-      </div>
-
-      <!-- Community -->
-      <div>
-        <h3 class="font-semibold text-foreground mb-4">Community</h3>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Wanderlust.org</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Against Discrimination</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Invite Friends</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Gift Cards</a></li>
-        </ul>
-      </div>
-
-      <!-- Hosting -->
-      <div>
-        <h3 class="font-semibold text-foreground mb-4">Hosting</h3>
-        <ul class="space-y-3">
-          <li><a href="/wanderlust/listings" class="text-sm text-muted-foreground hover:text-primary transition-colors">List Your Home</a></li>
-          <li><a href="/wanderlust/listings" class="text-sm text-muted-foreground hover:text-primary transition-colors">Host an Experience</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Responsible Hosting</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Resource Center</a></li>
-        </ul>
-      </div>
-
-      <!-- Wanderlust -->
-      <div>
-        <h3 class="font-semibold text-foreground mb-4">Wanderlust</h3>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Newsroom</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Careers</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">Investors</a></li>
-          <li><a href="#" class="text-sm text-muted-foreground hover:text-primary transition-colors">New Features</a></li>
-        </ul>
-      </div>
-
+<footer id="footer" class="relative bg-gray-900 text-gray-300 bottom-0">
+  <div
+    class="max-w-screen-2xl mx-auto px-6 py-12 grid lg:grid-cols-4 md:grid-cols-2 gap-10"
+  >
+    <!-- Brand Info -->
+    <div>
+      <h2 class="text-white text-2xl font-bold mb-4">Wanderlust</h2>
+      <p class="text-sm leading-6">
+        Wanderlust is a premier travel listing platform designed to make
+        exploring the world easy, fun, and unforgettable. As your ultimate
+        travel companion, we connect adventurers with incredible destinations.
+      </p>
     </div>
 
-    <!-- Bottom Section -->
-    <div class="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
+    <!-- Quick Links -->
+    <div>
+      <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#footer" class="hover:underline">About Us</a></li>
+        <li><a href="/wanderlust" class="hover:underline">Home</a></li>
+        <li>
+          <a href="/wanderlust/listings/new" class="hover:underline">Host</a>
+        </li>
+        <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+        <li><a href="#" class="hover:underline">Terms of Service</a></li>
+      </ul>
+    </div>
 
-      <div class="flex items-center gap-4 text-sm text-muted-foreground">
-        <span>© <%= new Date().getFullYear() %> Wanderlust, Inc.</span>
-        <span>·</span>
-        <a href="#" class="hover:text-primary transition-colors">Privacy</a>
-        <span>·</span>
-        <a href="#" class="hover:text-primary transition-colors">Terms</a>
-        <span>·</span>
-        <a href="#" class="hover:text-primary transition-colors">Sitemap</a>
-      </div>
+    <!-- Customer Service -->
+    <div>
+      <h3 class="text-white text-lg font-semibold mb-4">Customer Service</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="#" class="hover:text-white">FAQs</a></li>
+        <li>
+          <a href="/wanderlust/listings" class="hover:text-white">Explore</a>
+        </li>
+        <li><a href="/support" class="hover:text-white">Support</a></li>
+      </ul>
+    </div>
 
-      <div class="flex items-center gap-6">
-
-        <!-- Language -->
-        <button class="flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors">
-          <!-- Globe Icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <circle cx="12" cy="12" r="10" />
-            <path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20" />
-          </svg>
-          English (US)
+    <!-- Newsletter & Social Media -->
+    <div>
+      <h3 class="text-white text-lg font-semibold mb-4">Stay Connected</h3>
+      <p class="text-sm mb-3">
+        Subscribe to our newsletter for exclusive deals & updates.
+      </p>
+      <form action="/wanderlust/subscribe" method="POST" class="flex">
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+          class="w-full px-3 py-2 rounded-l-md focus:outline-none text-gray-900"
+        />
+        <button
+          type="submit"
+          class="bg-red-600 px-4 py-2 rounded-r-md text-white hover:bg-red-700"
+        >
+          Subscribe
         </button>
+      </form>
 
-        <!-- Social Icons -->
-        <div class="flex items-center gap-4">
-
-          <!-- Facebook -->
-          <a href="#" class="text-foreground hover:text-primary transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
-            </svg>
-          </a>
-
-          <!-- Twitter -->
-          <a href="#" class="text-foreground hover:text-primary transition-colors">
-             <i class="fa-brands fa-linkedin-in"></i>
-          </a>
-
-          <!-- Instagram -->
-          <a href="#" class="text-foreground hover:text-primary transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <rect x="2" y="2" width="20" height="20" rx="5" />
-              <circle cx="12" cy="12" r="3" />
-              <circle cx="17" cy="7" r="1" />
-            </svg>
-          </a>
-
-        </div>
+      <div class="flex space-x-4 mt-5">
+        <a href="#" class="p-2 bg-gray-800 rounded-full hover:bg-blue-600">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="p-2 bg-gray-800 rounded-full hover:bg-sky-400">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="p-2 bg-gray-800 rounded-full hover:bg-pink-500">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="p-2 bg-gray-800 rounded-full hover:bg-blue-700">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
       </div>
-
     </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="border-t border-gray-700 py-4 text-center text-sm text-gray-400">
+    &copy; <%= new Date().getFullYear() %> Wanderlust Pvt Ltd, Greater Noida.
   </div>
 </footer>
-
