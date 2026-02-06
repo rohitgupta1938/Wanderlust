@@ -16,7 +16,7 @@ router.post("/signup",wrapAsync(userController.signupUser));
 router.get("/login",userController.loginPage );
 
 // login user
-router.post("/login", saveRedirectUrl,passport.authenticate("local", {failureRedirect: "/wanderlust/login",failureFlash: true}),userController.loginUser);
+router.post("/login", saveRedirectUrl,passport.authenticate("local", {failureRedirect: "/wanderlust/signup",failureFlash: true}),userController.loginUser);
 
 router.get("/logout", userController.logoutUser);
 export default router;
